@@ -44,7 +44,7 @@ def displayData():
     if request.method == 'POST':
         try: 
           baseurl = 'http://www.recipepuppy.com/api/'
-          params = {"i": "eggs"}
+          params = {"i": request.form["ingredient"]}
           r = requests.get(baseurl, params = params)
           return r.text
         except:
