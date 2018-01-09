@@ -15,6 +15,7 @@ def index():
 @app.route('/course/<course>')
 def course(course):
    return "Welcome to {}".format(course)
+   # OR return "<h1> Welcome to " +course+ "<h1>", but this is weird
 
 # Task 3.1
 # Edit the HTML form such that form data is sent to localhost:5000/result using POST method
@@ -23,7 +24,7 @@ def enterData():
     s = """<!DOCTYPE html>
 <html>
 <body>
-<form>
+<form action="/result" method="post"> 
   INGREDIENT:<br>
   <input type="text" name="ingredient" value="eggs">
   <br>
@@ -41,10 +42,18 @@ def enterData():
 @app.route('/result',methods = ['POST', 'GET'])
 def displayData():
     if request.method == 'POST':
-        pass
+        try: 
+          baseurl = 'http://www.recipepuppy.com/api/'
+          params = {"i": "eggs"}
+          r = requests.get(baseurl, params = params)
+          return r.text
+        except:
+          return "Ya done fucked up"
 
+# def simpleFormData():
+#   if request.method == 'POST:'
 ## Task 4
-## Note : Since this is a dyanmic URL, recipes function should recieve a paramter called `ingrdient` 
+## Note : Since this is a dyanmic URL, recipes function should recieve a parameter called `ingredient` 
 @app.route('/recipe/<ingredient>')
 def recipes():
     pass
